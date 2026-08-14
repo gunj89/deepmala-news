@@ -2,7 +2,9 @@
    RESET
 ===================================================== */
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,6 +12,7 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -17,6 +20,7 @@ body {
     background-color: #f8f8f6;
     color: #111827;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 a {
@@ -24,14 +28,44 @@ a {
     color: inherit;
 }
 
-img {
+img,
+video,
+iframe {
     max-width: 100%;
     display: block;
+}
+
+button {
+    font: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 button,
 a {
     -webkit-tap-highlight-color: transparent;
+}
+
+/* Accessibility: visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 
@@ -56,6 +90,13 @@ a {
     --border: #dedede;
 
     --container: 1200px;
+
+    /* Fluid spacing scale — scales smoothly between mobile and desktop
+       instead of jumping at fixed breakpoints */
+    --section-py: clamp(48px, 9vw, 100px);
+    --gap-lg: clamp(24px, 6vw, 90px);
+    --gap-md: clamp(18px, 3vw, 40px);
+    --gap-sm: clamp(12px, 2vw, 22px);
 }
 
 
@@ -69,12 +110,12 @@ a {
 }
 
 section {
-    padding: 100px 0;
+    padding: var(--section-py) 0;
 }
 
 .section-heading {
     max-width: 700px;
-    margin-bottom: 55px;
+    margin-bottom: clamp(28px, 5vw, 55px);
 }
 
 .section-heading > span,
@@ -92,14 +133,15 @@ section {
 .section-heading h2 {
     color: var(--dark);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(36px, 5vw, 58px);
-    line-height: 1.05;
+    font-size: clamp(32px, 5vw, 58px);
+    line-height: 1.1;
     margin-bottom: 18px;
+    word-wrap: break-word;
 }
 
 .section-heading p {
     color: var(--muted);
-    font-size: 17px;
+    font-size: clamp(15px, 1.6vw, 17px);
     max-width: 620px;
 }
 
@@ -126,12 +168,16 @@ section {
     align-items: center;
     justify-content: space-between;
 
-    gap: 30px;
+    gap: 20px;
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 22px;
+    font-size: clamp(18px, 2vw, 22px);
     font-weight: 900;
     line-height: 0.9;
 
@@ -139,12 +185,25 @@ section {
 
     border-left: 4px solid var(--primary);
     padding-left: 12px;
+
+    flex-shrink: 0;
+}
+
+/* Logo image — fixed, sane size instead of a fragile % value
+   that shrank/grew unpredictably with the viewport */
+.logo img,
+#logo {
+    height: 32px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: clamp(16px, 2.5vw, 32px);
+    flex-wrap: wrap;
 }
 
 .navbar a {
@@ -173,11 +232,13 @@ section {
     transition: width 0.2s ease;
 }
 
-.navbar a:hover {
+.navbar a:hover,
+.navbar a:focus-visible {
     color: var(--primary);
 }
 
-.navbar a:hover::after {
+.navbar a:hover::after,
+.navbar a:focus-visible::after {
     width: 100%;
 }
 
@@ -195,11 +256,39 @@ section {
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
+
+    white-space: nowrap;
 }
 
-.youtube-btn:hover {
+.youtube-btn:hover,
+.youtube-btn:focus-visible {
     background-color: var(--primary-dark);
     transform: translateY(-2px);
+}
+
+/* Mobile nav toggle button (hamburger).
+   Hidden by default on desktop; shown only under the mobile breakpoint.
+   If your HTML doesn't yet have a button with this class, add:
+   <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+     <span></span><span></span><span></span>
+   </button>
+   and toggle a `.is-open` class on `.navbar` with a few lines of JS. */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--dark);
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 
@@ -208,7 +297,7 @@ section {
 ===================================================== */
 
 .hero {
-    min-height: 680px;
+    min-height: clamp(480px, 80vh, 680px);
 
     display: flex;
     align-items: center;
@@ -224,22 +313,22 @@ section {
 
     align-items: center;
 
-    gap: 80px;
+    gap: var(--gap-lg);
 }
 
 .hero-text h1 {
     font-family: "Noto Sans Gujarati", "Nirmala UI", sans-serif;
-    font-size: clamp(55px, 7vw, 95px);
+    font-size: clamp(42px, 8vw, 95px);
     font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -3px;
+    line-height: 0.98;
+    letter-spacing: clamp(-2px, -0.3vw, -1px);
 
     color: #111827;
 
     margin: 0;
     max-width: 850px;
+    word-wrap: break-word;
 }
-
 
 .hero-text h1 span {
     color: var(--primary);
@@ -250,7 +339,7 @@ section {
 
     color: var(--text);
 
-    font-size: 18px;
+    font-size: clamp(15px, 1.8vw, 18px);
 
     margin-bottom: 35px;
 }
@@ -298,7 +387,8 @@ section {
     border: 1px solid var(--primary);
 }
 
-.primary-btn:hover {
+.primary-btn:hover,
+.primary-btn:focus-visible {
     background-color: var(--primary-dark);
     border-color: var(--primary-dark);
     transform: translateY(-2px);
@@ -312,7 +402,8 @@ section {
     border: 1px solid #bdbdbd;
 }
 
-.secondary-btn:hover {
+.secondary-btn:hover,
+.secondary-btn:focus-visible {
     border-color: var(--dark);
     background-color: var(--dark);
     color: var(--white);
@@ -327,6 +418,7 @@ section {
 .hero-newspaper {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .newspaper-card {
@@ -334,7 +426,7 @@ section {
 
     background-color: var(--background);
 
-    padding: 25px;
+    padding: clamp(15px, 3vw, 25px);
 
     border: 1px solid var(--border);
 
@@ -355,9 +447,9 @@ section {
 }
 
 .newspaper-cover {
-    min-height: 500px;
+    min-height: clamp(320px, 45vw, 500px);
 
-    padding: 45px 30px;
+    padding: clamp(28px, 5vw, 45px) clamp(18px, 4vw, 30px);
 
     display: flex;
     flex-direction: column;
@@ -406,7 +498,7 @@ section {
 .newspaper-cover h2 {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 48px;
+    font-size: clamp(30px, 6vw, 48px);
 
     line-height: 0.95;
 
@@ -433,11 +525,11 @@ section {
 
     grid-template-columns: 0.8fr 1.2fr;
 
-    gap: 90px;
+    gap: var(--gap-lg);
 
     align-items: center;
 
-    padding-bottom: 100px;
+    padding-bottom: var(--section-py);
 
     border-bottom: 1px solid var(--border);
 }
@@ -449,7 +541,7 @@ section {
 
 .cover-placeholder {
     width: min(100%, 350px);
-    min-height: 460px;
+    min-height: clamp(300px, 40vw, 460px);
 
     background-color: var(--white);
 
@@ -457,7 +549,7 @@ section {
 
     box-shadow: 12px 12px 0 #e5e5e2;
 
-    padding: 35px;
+    padding: clamp(20px, 4vw, 35px);
 
     display: flex;
     flex-direction: column;
@@ -505,7 +597,7 @@ section {
 .cover-placeholder h3 {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 42px;
+    font-size: clamp(28px, 5vw, 42px);
 
     line-height: 0.95;
 
@@ -527,9 +619,9 @@ section {
 .edition-info h3 {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(28px, 4vw, 48px);
 
-    line-height: 1.05;
+    line-height: 1.1;
 
     margin-bottom: 20px;
 }
@@ -537,7 +629,7 @@ section {
 .edition-info > p {
     color: var(--muted);
 
-    font-size: 16px;
+    font-size: clamp(14px, 1.6vw, 16px);
 
     margin-bottom: 18px;
 }
@@ -562,7 +654,7 @@ section {
 ===================================================== */
 
 .previous-editions {
-    padding-top: 80px;
+    padding-top: clamp(48px, 8vw, 80px);
 }
 
 .sub-heading {
@@ -572,7 +664,7 @@ section {
 .sub-heading h3 {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 30px;
+    font-size: clamp(24px, 3vw, 30px);
 }
 
 .edition-grid {
@@ -580,7 +672,7 @@ section {
 
     grid-template-columns: repeat(4, 1fr);
 
-    gap: 22px;
+    gap: var(--gap-sm);
 }
 
 .edition {
@@ -630,7 +722,7 @@ section {
 .small-cover strong {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 27px;
+    font-size: clamp(20px, 3vw, 27px);
 }
 
 .edition h4 {
@@ -657,7 +749,8 @@ section {
     font-weight: 700;
 }
 
-.edition a:hover {
+.edition a:hover,
+.edition a:focus-visible {
     color: var(--primary-dark);
 }
 
@@ -689,7 +782,7 @@ section {
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 25px;
+    gap: var(--gap-sm);
 }
 
 .video-card {
@@ -716,7 +809,7 @@ section {
 }
 
 .video-info {
-    padding: 20px;
+    padding: clamp(14px, 2vw, 20px);
 }
 
 .video-info span {
@@ -734,7 +827,7 @@ section {
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 21px;
+    font-size: clamp(18px, 2vw, 21px);
 
     line-height: 1.2;
 
@@ -773,7 +866,8 @@ section {
         transform 0.2s ease;
 }
 
-.youtube-main-btn:hover {
+.youtube-main-btn:hover,
+.youtube-main-btn:focus-visible {
     background-color: #dc2626;
 
     transform: translateY(-2px);
@@ -795,7 +889,7 @@ section {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 100px;
+    gap: var(--gap-lg);
 
     align-items: start;
 }
@@ -803,9 +897,9 @@ section {
 .about-title h2 {
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: clamp(38px, 5vw, 60px);
+    font-size: clamp(32px, 5vw, 60px);
 
-    line-height: 1.02;
+    line-height: 1.1;
 
     margin-top: 10px;
 }
@@ -829,7 +923,7 @@ section {
 .about-text p {
     color: var(--text);
 
-    font-size: 18px;
+    font-size: clamp(15px, 1.8vw, 18px);
 
     margin-bottom: 25px;
 }
@@ -854,7 +948,7 @@ section {
 }
 
 .contact-item {
-    padding: 35px;
+    padding: clamp(22px, 3vw, 35px);
 
     border-right: 1px solid var(--border);
 }
@@ -881,6 +975,8 @@ section {
     font-size: 20px;
 
     margin-top: 10px;
+
+    word-wrap: break-word;
 }
 
 
@@ -893,7 +989,7 @@ section {
 
     color: white;
 
-    padding: 55px 0 20px;
+    padding: clamp(36px, 6vw, 55px) 0 20px;
 }
 
 .footer-content {
@@ -902,11 +998,13 @@ section {
     align-items: flex-start;
     justify-content: space-between;
 
-    gap: 50px;
+    gap: clamp(24px, 5vw, 50px);
 
-    padding-bottom: 45px;
+    padding-bottom: clamp(28px, 5vw, 45px);
 
     border-bottom: 1px solid #29313b;
+
+    flex-wrap: wrap;
 }
 
 .footer-brand h3 {
@@ -926,7 +1024,7 @@ section {
 .footer-links {
     display: flex;
 
-    gap: 25px;
+    gap: clamp(14px, 2.5vw, 25px);
 
     flex-wrap: wrap;
 }
@@ -939,7 +1037,8 @@ section {
     transition: color 0.2s ease;
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-links a:focus-visible {
     color: white;
 }
 
@@ -955,31 +1054,57 @@ section {
 
 
 /* =====================================================
+   LARGE TABLET / SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .about-content {
+        gap: var(--gap-md);
+    }
+
+    .current-edition {
+        gap: var(--gap-md);
+    }
+}
+
+
+/* =====================================================
    TABLET
 ===================================================== */
 
 @media (max-width: 1000px) {
 
     .navbar {
-        gap: 20px;
+        gap: 18px;
     }
 
     .hero-content {
         grid-template-columns: 1fr 0.8fr;
 
-        gap: 40px;
-    }
-
-    .hero-text h1 {
-        font-size: 65px;
+        gap: var(--gap-md);
     }
 
     .current-edition {
-        gap: 50px;
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .edition-cover {
+        order: -1;
+    }
+
+    .edition-info {
+        max-width: none;
+        margin-inline: auto;
+    }
+
+    .edition-buttons {
+        justify-content: center;
     }
 
     .edition-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .video-grid {
@@ -987,22 +1112,21 @@ section {
     }
 
     .about-content {
-        gap: 50px;
+        grid-template-columns: 1fr;
+        gap: var(--gap-md);
     }
 
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 
 /* =====================================================
-   MOBILE
+   MOBILE (NAV COLLAPSES HERE)
 ===================================================== */
 
-@media (max-width: 750px) {
-
-    section {
-        padding: 70px 0;
-    }
-
+@media (max-width: 850px) {
 
     /* Header */
 
@@ -1010,90 +1134,102 @@ section {
         min-height: 70px;
     }
 
+    .nav-toggle {
+        display: flex;
+    }
+
+    /* Off-canvas style mobile menu. Toggle `.is-open` on `.navbar`
+       from JS when `.nav-toggle` is clicked. */
     .navbar {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 0;
+
+        background-color: var(--white);
+        border-bottom: 1px solid var(--border);
+
+        max-height: 0;
+        overflow: hidden;
+
+        transition: max-height 0.25s ease;
+    }
+
+    .navbar.is-open {
+        max-height: 400px;
+    }
+
+    .navbar a {
+        width: 100%;
+        padding: 14px clamp(16px, 5vw, 32px);
+    }
+
+    .navbar a::after {
         display: none;
+    }
+
+    .navbar a:hover,
+    .navbar a:focus-visible {
+        background-color: var(--light);
     }
 
     .youtube-btn {
         padding: 9px 15px;
-
         font-size: 12px;
     }
+}
 
+
+/* =====================================================
+   SMALL TABLET / LARGE PHONE
+===================================================== */
+
+@media (max-width: 750px) {
 
     /* Hero */
 
     .hero {
         min-height: auto;
-
-        padding: 75px 0;
+        padding: clamp(50px, 12vw, 75px) 0;
     }
 
     .hero-content {
         grid-template-columns: 1fr;
-
-        gap: 60px;
+        gap: var(--gap-md);
+        text-align: center;
     }
 
-    .hero-text h1 {
-        font-size: clamp(52px, 15vw, 75px);
-
-        letter-spacing: -2px;
-    }
-
-    .hero-text p {
-        font-size: 16px;
+    .hero-buttons {
+        justify-content: center;
     }
 
     .hero-newspaper {
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .newspaper-card {
-        width: 90%;
-
-        margin-left: 10px;
+        width: 100%;
+        max-width: 430px;
+        margin-left: 0;
     }
-
 
     /* Newspaper */
 
-    .current-edition {
-        grid-template-columns: 1fr;
-
-        gap: 60px;
-    }
-
-    .edition-info {
-        max-width: none;
-    }
-
     .edition-grid {
         grid-template-columns: repeat(2, 1fr);
-
         gap: 15px;
     }
-
 
     /* YouTube */
 
     .video-grid {
         grid-template-columns: 1fr;
     }
-
-
-    /* About */
-
-    .about-content {
-        grid-template-columns: 1fr;
-
-        gap: 35px;
-    }
-
-    .about-text p {
-        font-size: 16px;
-    }
-
 
     /* Contact */
 
@@ -1103,25 +1239,28 @@ section {
 
     .contact-item {
         border-right: none;
-
         border-bottom: 1px solid var(--border);
+        text-align: center;
     }
 
     .contact-item:last-child {
         border-bottom: none;
     }
 
-
     /* Footer */
 
     .footer-content {
         flex-direction: column;
+        text-align: center;
     }
 
     .footer-links {
-        gap: 15px;
+        justify-content: center;
     }
 
+    .footer-content > * {
+        width: 100%;
+    }
 }
 
 
@@ -1129,7 +1268,7 @@ section {
    SMALL MOBILE
 ===================================================== */
 
-@media (max-width: 450px) {
+@media (max-width: 480px) {
 
     .container {
         width: 90%;
@@ -1138,7 +1277,6 @@ section {
     .hero-buttons,
     .edition-buttons {
         flex-direction: column;
-
         align-items: stretch;
     }
 
@@ -1148,37 +1286,33 @@ section {
     }
 
     .newspaper-card {
-        width: 100%;
-
         padding: 15px;
     }
 
-    .newspaper-cover {
-        min-height: 400px;
+    .edition-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
-    .newspaper-cover h2 {
-        font-size: 38px;
+    .edition {
+        padding: 12px;
     }
+}
 
-    .cover-placeholder {
-        min-height: 400px;
-    }
+
+/* =====================================================
+   EXTRA SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
 
     .edition-grid {
         grid-template-columns: 1fr;
     }
 
-    .section-heading {
-        margin-bottom: 40px;
+    .logo {
+        font-size: 16px;
+        padding-left: 8px;
+        border-left-width: 3px;
     }
-
-    .section-heading h2 {
-        font-size: 40px;
-    }
-
-}
-#logo{
-    height: 9%;
-    width: 9%;
 }
