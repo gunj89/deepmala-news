@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DEEPMALA Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- LOGIN SECTION -->
+    <div class="login-container" id="loginContainer">
+
+        <div class="login-box">
+
+            <h1>DEEPMALA</h1>
+            <p>Admin Panel</p>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit">
+                    Login
+                </button>
+
+                <p id="loginMessage"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>DEEPMALA</h1>
+                <p>Administration Dashboard</p>
+            </div>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <h2>Welcome 👋</h2>
+
+            <p class="dashboard-description">
+                Manage DEEPMALA newspaper editions.
+            </p>
+
+
+            <!-- UPLOAD NEWSPAPER -->
+
+            <section class="upload-card">
+
+                <h2>📰 Upload Newspaper</h2>
+
+                <p>
+                    Upload this week's DEEPMALA newspaper PDF.
+                </p>
+
+                <form id="uploadForm">
+
+                    <label for="newspaper">
+                        Newspaper PDF
+                    </label>
+
+                    <input
+                        type="file"
+                        id="newspaper"
+                        accept="application/pdf"
+                        required
+                    >
+
+
+                    <label for="editionDate">
+                        Edition Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="editionDate"
+                        required
+                    >
+
+
+                    <button type="submit">
+                        Publish Newspaper
+                    </button>
+
+                </form>
+
+                <p id="uploadMessage"></p>
+
+            </section>
+
+
+            <!-- PREVIOUS EDITIONS -->
+
+            <section class="editions-card">
+
+                <h2>Previous Editions</h2>
+
+                <div id="editionsList">
+
+                    <p>
+                        No newspapers uploaded yet.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script type="module" src="admin.js"></script>
+
+</body>
+</html>

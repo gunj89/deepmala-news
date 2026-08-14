@@ -148,73 +148,79 @@
                 </div>
 
 
-                <!-- Current Edition -->
+<div class="current-edition">
 
-                <div class="current-edition">
+    <div class="edition-cover">
 
+        <div class="cover-placeholder">
 
-                    <div class="edition-cover">
+            <span>
+                DEEPMALA
+            </span>
 
-                        <!-- Replace with actual newspaper cover -->
+            <h3>
+                WEEKLY<br>
+                NEWSPAPER
+            </h3>
 
-                        <div class="cover-placeholder">
+            <p id="coverEditionDate">
+                Loading...
+            </p>
 
-                            <span>
-                                DEEPMALA
-                            </span>
+        </div>
 
-                            <h3>
-                                WEEKLY<br>
-                                NEWSPAPER
-                            </h3>
-
-                            <p>
-                                13 AUGUST 2026
-                            </p>
-
-                        </div>
-
-                    </div>
+    </div>
 
 
-                    <div class="edition-info">
+    <div class="edition-info">
 
-                        <span class="edition-label">
-                            CURRENT EDITION
-                        </span>
+        <span class="edition-label">
+            CURRENT EDITION
+        </span>
 
-                        <h3>
-                            DEEPMALA Weekly Newspaper
-                        </h3>
+        <h3 id="newspaperTitle">
+            Loading newspaper...
+        </h3>
 
-                        <p>
-                            Stay connected with the latest stories,
-                            reports and important information from
-                            your community.
-                        </p>
+        <p>
+            Read the latest edition of DEEPMALA online
+            or download the newspaper for later.
+        </p>
 
-                        <p>
-                            <strong>Published:</strong>
-                            13 August 2026
-                        </p>
+        <p>
+            <strong>Published:</strong>
+            <span id="editionDate">
+                Loading...
+            </span>
+        </p>
 
-                        <div class="edition-buttons">
 
-                            <!-- Replace # with actual PDF -->
+        <div class="edition-buttons">
 
-                            <a href="#" class="primary-btn">
-                                Read Online
-                            </a>
+            <a
+                href="#"
+                id="readNewspaper"
+                class="primary-btn"
+                target="_blank"
+            >
+                Read Online
+            </a>
 
-                            <a href="#" class="secondary-btn">
-                                Download PDF
-                            </a>
+            <a
+                href="#"
+                id="downloadNewspaper"
+                class="secondary-btn"
+                target="_blank"
+                download
+            >
+                Download PDF
+            </a>
 
-                        </div>
+        </div>
 
-                    </div>
+    </div>
 
-                </div>
+</div>
 
 
                 <!-- Previous Editions -->
@@ -367,147 +373,6 @@
 
         <!-- ================= YOUTUBE ================= -->
 
-        <section class="youtube-section" id="youtube">
-
-            <div class="container">
-
-
-                <div class="section-heading youtube-heading">
-
-                    <span>
-                        DEEPMALA NEWS
-                    </span>
-
-                    <h2>
-                        Watch Us on YouTube
-                    </h2>
-
-                    <p>
-                        Watch DEEPMALA's latest news coverage,
-                        reports, interviews and special stories
-                        on our YouTube channel.
-                    </p>
-
-                </div>
-
-
-                <!-- Videos -->
-
-                <div class="video-grid">
-
-
-                    <!-- Video 1 -->
-
-                    <article class="video-card">
-
-                        <div class="video">
-
-                            <!-- Replace VIDEO_ID -->
-
-                            <iframe
-                                src="https://www.youtube.com/embed/VIDEO_ID"
-                                title="DEEPMALA YouTube Video"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <span>
-                                DEEPMALA NEWS
-                            </span>
-
-                            <h3>
-                                Latest News Report
-                            </h3>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Video 2 -->
-
-                    <article class="video-card">
-
-                        <div class="video">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/VIDEO_ID"
-                                title="DEEPMALA YouTube Video"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <span>
-                                DEEPMALA NEWS
-                            </span>
-
-                            <h3>
-                                Special News Coverage
-                            </h3>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Video 3 -->
-
-                    <article class="video-card">
-
-                        <div class="video">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/VIDEO_ID"
-                                title="DEEPMALA YouTube Video"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <span>
-                                DEEPMALA NEWS
-                            </span>
-
-                            <h3>
-                                Ground Report
-                            </h3>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-
-                <!-- YouTube Button -->
-
-                <div class="youtube-cta">
-
-                    <!-- Replace # with actual YouTube channel URL -->
-
-                    <a href="#" class="youtube-main-btn">
-                        Visit DEEPMALA on YouTube →
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
 
 
         <!-- ================= ABOUT ================= -->
@@ -686,6 +551,7 @@
 
     </footer>
 
+    <script type="module" src="script.js"></script>
 
 </body>
 

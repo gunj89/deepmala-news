@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+    color: #151a26;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 380px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.login-box h1 {
+    font-size: 32px;
+}
+
+.login-box > p {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    color: #777;
+}
+
+.login-box label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    font-size: 15px;
+}
+
+.login-box button {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #c51f26;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#loginMessage {
+    margin-top: 15px;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+    display: none;
+
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+.dashboard-header {
+    background: #151a26;
+    color: white;
+
+    padding: 20px 6%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+}
+
+.dashboard-header p {
+    color: #aaa;
+    margin-top: 4px;
+}
+
+#logoutBtn {
+    padding: 10px 18px;
+
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    background: transparent;
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* CONTENT */
+
+.dashboard-content {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 40px auto;
+}
+
+.dashboard-content > h2 {
+    font-size: 28px;
+}
+
+.dashboard-description {
+    color: #777;
+    margin-top: 8px;
+}
+
+
+/* UPLOAD CARD */
+
+.upload-card,
+.editions-card {
+    background: white;
+
+    padding: 30px;
+
+    margin-top: 30px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.upload-card h2,
+.editions-card h2 {
+    margin-bottom: 8px;
+}
+
+.upload-card > p {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+
+/* FORM */
+
+#uploadForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#uploadForm label {
+    margin-top: 15px;
+    margin-bottom: 6px;
+
+    font-weight: 600;
+}
+
+#uploadForm input {
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    font-size: 15px;
+}
+
+#uploadForm button {
+    margin-top: 25px;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #c51f26;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#uploadForm button:hover {
+    opacity: 0.9;
+}
+
+
+/* MESSAGE */
+
+#uploadMessage {
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .login-box {
+        width: 90%;
+        padding: 30px 25px;
+    }
+
+    .dashboard-header {
+        padding: 18px 5%;
+    }
+
+    .dashboard-header h1 {
+        font-size: 22px;
+    }
+
+    .dashboard-content {
+        width: 92%;
+    }
+
+    .upload-card,
+    .editions-card {
+        padding: 20px;
+    }
+}
