@@ -5,7 +5,99 @@ import { storage, tablesDB } from "./appwrite.js";
 const BUCKET_ID = "6a7e8bce001fa009b1b2";
 const DATABASE_ID = "6a7e99e5002d9abd688b";
 const TABLE_ID = "newspapers";
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
+
+// Get DEEPMALA YouTube channel
+async function getDeepmalaChannel() {
+
+    const url =
+        `https://www.googleapis.com/youtube/v3/channels` +
+        `?part=contentDetails` +
+        `&forHandle=@deepmalanews` +
+        `&key=${YOUTUBE_API_KEY}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log("Channel:", data);
+
+    return data.items[0];
+}
+
+
+// Get newest 3 videos
+async function getLatestVideos() {
+
+    const channel = await getDeepmalaChannel();
+
+    const uploadsPlaylist =
+        channel.contentDetails.relatedPlaylists.uploads;
+
+    const url =
+        `https://www.googleapis.com/youtube/v3/playlistItems` +
+        `?part=snippet` +
+        `&playlistId=${uploadsPlaylist}` +
+        `&maxResults=3` +
+        `&key=${YOUTUBE_API_KEY}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log("Latest videos:", data);
+
+    return data.items;
+}
+
+
+async function loadYouTubeVideos() {
+
+    try {
+
+        const videos = await getLatestVideos();
+
+        const videoCards =
+            document.querySelectorAll(".video-card");
+
+        videos.forEach((video, index) => {
+
+            if (!videoCards[index]) return;
+
+            const videoId =
+                video.snippet.resourceId.videoId;
+
+            const title =
+                video.snippet.title;
+
+            const iframe =
+                videoCards[index].querySelector("iframe");
+
+            const heading =
+                videoCards[index].querySelector("h3");
+
+
+            // Update YouTube video
+            iframe.src =
+                `https://www.youtube.com/embed/${videoId}`;
+
+            // Update video title
+            heading.textContent =
+                title;
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load YouTube videos:",
+            error
+        );
+
+    }
+
+}
+
+loadYouTubeVideos();
 
 
 async function loadLatestNewspaper() {
