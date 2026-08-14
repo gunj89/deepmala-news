@@ -1316,3 +1316,13 @@ section {
         border-left-width: 3px;
     }
 }
+
+@media (max-width: 768px) {
+    .newspaper-card {
+        display: none;
+    }
+}
+
+.about-deep{
+    margin-top: 15px;
+}
