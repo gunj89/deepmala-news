@@ -1,6 +1,6 @@
 
 import { Query } from "appwrite";
-import { storage, tablesDB } from "./appwrite.js";
+import { storage, tablesDB } from "../../js/appwrite.js";
 
 const BUCKET_ID = "6a7e8bce001fa009b1b2";
 const DATABASE_ID = "6a7e99e5002d9abd688b";
