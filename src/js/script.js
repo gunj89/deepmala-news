@@ -164,8 +164,8 @@ async function loadLatestNewspaper() {
             });
 
 
-        titleElement.textContent =
-            newspaper.title;
+        // titleElement.textContent =
+        //     newspaper.title;
 
         editionDateElement.textContent =
             formattedDate;
