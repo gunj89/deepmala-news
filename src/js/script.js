@@ -119,14 +119,14 @@ async function loadLatestNewspaper() {
     try {
         console.log("Trying to load newspaper...");
 
-        const response = await tablesDB.listRows({
-            databaseId: DATABASE_ID,
-            tableId: TABLE_ID,
-            queries: [
-                Query.orderDesc("editionDate"),
-                Query.limit(1)
-            ]
-        });
+       const response = await tablesDB.listRows({
+    databaseId: DATABASE_ID,
+    tableId: TABLE_ID,
+    queries: [
+        Query.orderDesc("$createdAt"),
+        Query.limit(1)
+    ]
+});
 
 
         if (response.rows.length === 0) {
